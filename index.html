@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edu Caveira | Galeria</title>
+    <style>
+        /* --- ESTILOS GERAIS --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 20px 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container { width: 100%; max-width: 480px; text-align: center; position: relative; }
+
+        /* --- CAPA E PERFIL --- */
+        .banner-img {
+            width: 100%; height: 180px; object-fit: cover;
+            border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
+            margin-bottom: -60px; opacity: 0.8;
+        }
+        .profile-pic {
+            width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+            border: 4px solid #121212; position: relative; z-index: 10;
+            background-color: #2a2a2a; margin-bottom: 10px;
+        }
+
+        h1 { font-size: 22px; margin-bottom: 8px; font-weight: 700; }
+        p { color: #b3b3b3; font-size: 14px; margin-bottom: 30px; }
+
+        /* --- BOTÕES --- */
+        .link-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 16px; margin-bottom: 16px;
+            background-color: #1e1e1e; color: white; text-decoration: none;
+            border: 1px solid #333; border-radius: 50px; font-weight: 600;
+            transition: all 0.3s ease; cursor: pointer;
+        }
+        .link-btn:hover { background-color: #ffffff; color: #000000; transform: scale(1.02); }
+
+        /* --- NOVA ÁREA: PASTA DA GALERIA --- */
+        .folder-btn {
+            background-color: #2a2a2a; /* Um pouco mais claro para destacar */
+            border: 1px dashed #555; /* Borda pontilhada estilo pasta */
+        }
+
+        /* O Grid que fica escondido */
+        #gallery-grid {
+            display: none; /* Escondido por padrão */
+            grid-template-columns: 1fr 1fr; /* 2 colunas */
+            gap: 10px;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Animação suave ao abrir */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* A miniatura da foto */
+        .thumb-box {
+            position: relative;
+            height: 150px;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+
+        .thumb-box img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        /* Tooltip (Texto ao passar o mouse) */
+        .thumb-box::after {
+            content: "Clique para expandir 🔍";
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            font-size: 12px;
+            padding: 5px;
+            opacity: 0; /* Invisível por padrão */
+            transition: opacity 0.3s ease;
+        }
+
+        /* Efeitos Hover na miniatura */
+        .thumb-box:hover img { transform: scale(1.1); }
+        .thumb-box:hover::after { opacity: 1; } /* Mostra o texto */
+
+        /* --- MODAL (A FOTO GRANDE) --- */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            z-index: 1000; /* Fica na frente de tudo */
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.9); /* Fundo preto transparente */
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* A imagem dentro do modal */
+        .modal-content {
+            max-width: 90%; /* Em celular ocupa quase tudo */
+            max-height: 80%;
+            width: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+            animation: zoomIn 0.3s;
+        }
+
+        /* Em telas maiores (PC), ocupa 60% como você pediu */
+        @media (min-width: 768px) {
+            .modal-content { max-width: 60%; }
+        }
+
+        @keyframes zoomIn { from {transform:scale(0)} to {transform:scale(1)} }
+
+        /* Botão Fechar (X) */
+        .close-btn {
+            position: absolute;
+            top: 20px; right: 30px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 1001;
+        }
+        .close-btn:hover { color: #bbb; }
+
+        /* Sobre mim */
+        .footer-about { margin-top: 20px; padding-top: 20px; border-top: 1px solid #333; text-align: center; }
+        .footer-about h3 { font-size: 18px; color: #fff; margin-bottom: 10px; }
+        .footer-about p { font-size: 14px; line-height: 1.6; color: #888; text-align: justify; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <img src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=1000&auto=format&fit=crop" alt="Capa" class="banner-img">
+
+        <img src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/5254f42ec782a9c2b8eb41166e7dfbac~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=c23817f4&x-expires=1770559200&x-signature=RvApKWj3dMYO6cEOkqQkAa219fA%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=my3" alt="Perfil" class="profile-pic">
+
+        <h1>EDU CAVEIRA</h1>
+        <p>Vulto, atividades paranormais e o Edu morando sozinho.</p>
+
+        <a href="https://drive.google.com/file/d/1pJUV9QLnTUzHqU5p4EvLxGyCD_Rz95qb/view" class="link-btn">
+            <i class="fa-regular fa-newspaper"></i> Mídia Kit
+        </a>
+        <a href="https://www.instagram.com/oeducaveira/" class="link-btn">
+            <i class="fa-brands fa-instagram"></i> Instagram
+        </a>
+        <a href="https://www.youtube.com/channel/UCvEKRziPm3UcVvvOtoNJPBQ" class="link-btn">
+            <i class="fa-brands fa-youtube"></i> Canal no YouTube
+        </a>
+        <a href="https://www.tiktok.com/@edu.caveira" class="link-btn">
+            <i class="fa-brands fa-tiktok"></i> TikTok
+        </a>
+        <a href="https://whatsapp.com/channel/0029VaxlRwbJUM2jdes7Vu3H" class="link-btn">
+            <i class="fa-brands fa-whatsapp"></i> Grupo no WhatsApp
+        </a>
+
+        <div class="link-btn folder-btn" onclick="toggleGaleria()">
+            <i class="fa-solid fa-folder-open"></i> Momentos do Canal (Ver Fotos) <i class="fa-solid fa-chevron-down"></i>
+        </div>
+
+        <div id="gallery-grid">
+            
+            <div class="thumb-box" onclick="abrirModal(this)">
+                <img src="foto1.jpg" alt="Descrição da foto">
+            </div>
+
+            <div class="thumb-box" onclick="abrirModal(this)">
+                <img src="foto2.jpg" alt="Descrição da foto">
+            </div>
+
+            <div class="thumb-box" onclick="abrirModal(this)">
+                <img src="foto3.jpg" alt="Descrição da foto">
+            </div>
+
+            <div class="thumb-box" onclick="abrirModal(this)">
+                <img src="foto4.jpg" alt="Descrição da foto">
+            </div>
+
+        </div>
+
+        <div class="footer-about">
+            <h3>Sobre mim</h3>
+            <p>
+                Comecei o canal criando pegadinhas de terror no estilo raiz.
+                Usava máscaras de caveira enquanto minha esposa surgia ao fundo,
+                como se fosse um espírito, trazendo os primeiros sustos que marcaram o início dessa jornada.
+                Com o tempo, meus vídeos evoluíram para produções mais criativas e imersivas,
+                onde o terror se mistura com efeitos visuais e narrativas que desafiam a realidade:
+                reflexos que se movem sozinhos, vultos atravessando o cenário, presenças misteriosas,
+                simulações de possessão e cenas intensas que já me colocaram até pendurado na parede...
+                e até chorando em cena para tornar tudo ainda mais real.
+                São histórias, sustos e experiências tão inacreditáveis que, se não fossem gravadas,
+                muita gente duvidaria que aconteceram.<br><br>
+                Fiz diversas parcerias e entreguei grandes projetos, onde comprovei que é possível
+                inserir uma marca dentro do universo do terror sem depreciá-la.
+                Muito pelo contrário: os insights e resultados mostraram um impacto extremamente positivo,
+                potencializando a marca enquanto o conteúdo mantinha sua proposta principal.
+                Tudo isso você encontra no meu mídia kit no link no topo desse site.
+            </p>
+        </div>
+
+    </div>
+
+    <div id="myModal" class="modal" onclick="fecharModal(event)">
+        <span class="close-btn" onclick="fecharModal(event)">&times;</span>
+        <img class="modal-content" id="img01">
+    </div>
+
+    <script>
+        // Função para mostrar/esconder a pasta
+        function toggleGaleria() {
+            var grid = document.getElementById("gallery-grid");
+            if (grid.style.display === "grid") {
+                grid.style.display = "none";
+            } else {
+                grid.style.display = "grid";
+            }
+        }
+
+        // Função para abrir o Modal
+        function abrirModal(element) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("img01");
+            var imgSource = element.querySelector('img').src; // Pega a imagem clicada
+            
+            modal.style.display = "flex";
+            modalImg.src = imgSource;
+        }
+
+        // Função para fechar o Modal (Clicando no X ou fora)
+        function fecharModal(event) {
+            // Só fecha se clicar no X ou no fundo escuro (não na imagem)
+            if (event.target.id === "myModal" || event.target.className === "close-btn") {
+                document.getElementById("myModal").style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
