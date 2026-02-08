@@ -183,7 +183,7 @@
         </a>
 
         <div class="link-btn folder-btn" onclick="toggleGaleria()">
-            <i class="fa-solid fa-folder-open"></i> Momentos do Canal (Ver Fotos) <i class="fa-solid fa-chevron-down"></i>
+            <i class="fa-solid fa-folder-open"></i> Momentos do Canal (Ver Fotos) <i class="fa-solid fa-chevron-down" id="seta-galeria"></i>
         </div>
 
         <div id="gallery-grid">
@@ -251,14 +251,20 @@
     </div>
 
     <script>
-        // Função para mostrar/esconder a pasta
+        // Função para mostrar/esconder a pasta e virar a seta
         function toggleGaleria() {
             var grid = document.getElementById("gallery-grid");
-            if (grid.style.display === "grid") {
-                grid.style.display = "none";
-            } else {
-                grid.style.display = "grid";
-            }
+            var seta = document.getElementById("seta-galeria");
+
+        if (grid.style.display === "grid") {
+            // Se está aberto, fecha e aponta para baixo
+            grid.style.display = "none";
+            seta.className = "fa-solid fa-chevron-down"; 
+        } else {
+            // Se está fechado, abre e aponta para cima
+            grid.style.display = "grid";
+            seta.className = "fa-solid fa-chevron-up";
+        }
         }
 
         // Função para abrir o Modal
