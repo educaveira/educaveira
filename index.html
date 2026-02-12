@@ -69,7 +69,23 @@
             border: 1px solid #333; border-radius: 50px; font-weight: 600;
             transition: all 0.3s ease; cursor: pointer;
         }
-        .link-btn:hover { background-color: #ffffff; color: #000000; transform: scale(1.02); }
+
+        /* 1. Computador: Fica branco e cresce um pouco */
+        @media (hover: hover) {
+            .link-btn:hover { 
+                background-color: #ffffff; 
+                color: #000000; 
+                transform: scale(1.02); 
+            }
+        }
+
+        /* 2. Celular: Pisca rápido ao tocar sem travar */
+        .link-btn:active {
+            background-color: #ffffff;
+            color: #000000;
+            transform: scale(0.98);
+            transition: 0s;
+        }
 
         /* --- NOVA ÁREA: PASTA DA GALERIA --- */
         .folder-btn {
@@ -201,11 +217,22 @@
             line-height: 1.1;
         }
 
-        .icon-btn:hover {
+        /* 1. Computador (Mouse): Fica branco e sobe quando passa o mouse */
+        @media (hover: hover) {
+            .icon-btn:hover {
+                background-color: #ffffff;
+                color: #000000;
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+            }
+        }
+
+        /* 2. Celular (Dedo): Pisca branco rapidinho ao tocar */
+        .icon-btn:active {
             background-color: #ffffff;
             color: #000000;
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+            transform: scale(0.95);
+            transition: 0s;
         }
 
     </style>
