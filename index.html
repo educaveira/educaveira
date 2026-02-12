@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Edu Caveira</title>
+    <link rel="icon" href="profile-theme.jpg" type="image/x-icon">
 
     <meta property="og:site_name" content="Edu Caveira">
     <meta property="og:title" content="Edu Caveira">
@@ -162,6 +163,46 @@
         .footer-about h3 { font-size: 18px; color: #fff; margin-bottom: 10px; }
         .footer-about p { font-size: 14px; line-height: 1.6; color: #888; text-align: justify; }
 
+        .social-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .icon-btn {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 15px;
+            height: 90px; /* Aumentei um pouco para caber o texto */
+            display: flex;
+            flex-direction: column; /* Isso faz o texto ficar EMBAIXO do ícone */
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* Espaço entre ícone e texto */
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 24px; /* Tamanho do Ícone */
+            transition: all 0.3s ease;
+        }
+
+        /* Estilo do Texto dentro do botão */
+        .icon-btn span {
+            font-size: 13px; /* Tamanho similar ao subtítulo */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: normal;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        .icon-btn:hover {
+            background-color: #ffffff;
+            color: #000000;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+        }
+
     </style>
 </head>
 <body>
@@ -175,29 +216,49 @@
         <h1>EDU CAVEIRA</h1>
         <p>Vulto, atividades paranormais e o Edu morando sozinho.</p>
 
-        <a href="mailto:contato@educaveira.com" class="link-btn">
-            <i class="fa-regular fa-envelope"></i> Contato
-        </a>
-        <a href="midia-kit-2026.pdf" class="link-btn">
-            <i class="fa-regular fa-newspaper"></i> Mídia Kit
-        </a>
-        <a href="https://www.instagram.com/oeducaveira?igsh=M3N4Z2g0NjIxZ2Vr" class="link-btn">
-            <i class="fa-brands fa-instagram"></i> Instagram
-        </a>
-        <a href="https://www.youtube.com/channel/UCvEKRziPm3UcVvvOtoNJPBQ" class="link-btn">
-            <i class="fa-brands fa-youtube"></i> Canal no YouTube
-        </a>
-        <a href="https://www.tiktok.com/@edu.caveira" class="link-btn">
-            <i class="fa-brands fa-tiktok"></i> TikTok
-        </a>
+        <div class="social-grid">
+            
+            <a href="mailto:contato@educaveira.com" class="icon-btn">
+                <i class="fa-regular fa-envelope"></i>
+                <span>Contato</span>
+            </a>
 
-        <a href="https://www.facebook.com/share/1D9dY8ppqz/" class="link-btn">
-            <i class="fab fa-facebook"></i> Facebook
-        </a>
+            <a href="midia-kit-2026.pdf" target="_blank" class="icon-btn">
+                <i class="fa-regular fa-newspaper"></i>
+                <span>Mídia Kit</span>
+            </a>
 
-        <a href="https://whatsapp.com/channel/0029VaxlRwbJUM2jdes7Vu3H" class="link-btn">
-            <i class="fa-brands fa-whatsapp"></i> Grupo no WhatsApp
-        </a>
+            <a href="https://www.instagram.com/oeducaveira?igsh=M3N4Z2g0NjIxZ2Vr" target="_blank" class="icon-btn">
+                <i class="fa-brands fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+
+            <a href="https://www.youtube.com/channel/UCvEKRziPm3UcVvvOtoNJPBQ" target="_blank" class="icon-btn">
+                <i class="fa-brands fa-youtube"></i>
+                <span>YouTube</span>
+            </a>
+
+            <a href="https://www.tiktok.com/@edu.caveira" target="_blank" class="icon-btn">
+                <i class="fa-brands fa-tiktok"></i>
+                <span>TikTok</span>
+            </a>
+
+            <a href="https://www.facebook.com/share/1D9dY8ppqz/" target="_blank" class="icon-btn">
+                <i class="fa-brands fa-facebook-f"></i>
+                <span>Facebook</span>
+            </a>
+
+            <a href="https://whatsapp.com/channel/0029VaxlRwbJUM2jdes7Vu3H" target="_blank" class="icon-btn">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>Canal WhatsApp</span>
+            </a>
+
+            <a href="https://www.instagram.com/p/DM_M0Vqv-ux/" target="_blank" class="icon-btn">
+                <i class="fa-solid fa-star" style="color: #ffc222;"></i>
+                <span>Vídeo destaque</span>
+            </a>
+
+        </div>
 
         <div class="link-btn folder-btn" onclick="toggleGaleria()">
             <i class="fa-solid fa-folder-open"></i> Momentos do Canal (Ver Fotos) <i class="fa-solid fa-chevron-down" id="seta-galeria"></i>
@@ -240,11 +301,11 @@
         </div>
 
         <div class="footer-about">
-            <h3>Sobre mim</h3>
-            <p>
+            <h2 style="margin-top: 40px;">Sobre mim</h2>
+            <p><br>
                 Comecei o canal criando pegadinhas de terror no estilo raiz.
                 Usava máscaras de caveira enquanto minha esposa surgia ao fundo,
-                como se fosse um espírito, trazendo os primeiros sustos que marcaram o início dessa jornada.
+                como se fosse um espírito, trazendo os primeiros sustos que marcaram o início dessa jornada.<br><br>
                 Com o tempo, meus vídeos evoluíram para produções mais criativas e imersivas,
                 onde o terror se mistura com efeitos visuais e narrativas que desafiam a realidade:
                 reflexos que se movem sozinhos, vultos atravessando o cenário, presenças misteriosas,
