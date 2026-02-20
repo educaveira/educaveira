@@ -267,6 +267,54 @@
             transition: 0s;
         }
 
+        /* --- ESTILOS DO NOVO MODAL INTERATIVO --- */
+        /* Caixa que segura a imagem e o texto no modal */
+        .modal-content-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        } /* Removido o cursor: pointer daqui */
+
+        /* O texto "Clique para ver o vídeo" - VERSÃO FIXA NO RODAPÉ */
+        .modal-hover-text {
+            position: absolute;
+            bottom: 0; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%; 
+            height: auto; 
+            padding: 15px 0; 
+            background: rgba(0,0,0,0.85); 
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: 'Commando', sans-serif;
+            letter-spacing: 2px;
+            opacity: 1; 
+            border-bottom-left-radius: 8px; 
+            border-bottom-right-radius: 8px;
+            cursor: pointer; /* Mãozinha de clique adicionada SÓ na frase */
+        }
+
+        /* Estilo do iframe (Player de vídeo) */
+        .modal-iframe {
+            width: 90%;
+            aspect-ratio: 16 / 9; /* Mantém a proporção do YouTube */
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+            animation: zoomIn 0.3s;
+        }
+
+        /* Ajustes para telas maiores (PC) */
+        @media (min-width: 768px) {
+            .modal-hover-text { width: 60%; } /* Acompanha o max-width da foto no PC */
+            .modal-iframe { width: 60%; }
+        }
+
     </style>
 </head>
 <body>
@@ -330,35 +378,35 @@
 
         <div id="gallery-grid">
             
-            <div class="thumb-box" onclick="abrirModal(this)">
+            <div class="thumb-box" onclick="abrirModal(this)" data-video="https://www.youtube.com/embed/H8VrGC8gZvY">
                 <img src="./fotos/foto-grid-1.png" alt="Descrição da foto">
             </div>
 
-            <div class="thumb-box" onclick="abrirModal(this)">
+            <div class="thumb-box" onclick="abrirModal(this)" data-video="https://www.youtube.com/embed/MBVYSTJ9w-8">
                 <img src="./fotos/foto-grid-2.png" alt="Descrição da foto">
             </div>
 
-            <div class="thumb-box" onclick="abrirModal(this)">
+            <div class="thumb-box" onclick="abrirModal(this)" data-video="https://www.youtube.com/embed/qeIsoF4ANFw">
                 <img src="./fotos/foto-grid-3.png" alt="Descrição da foto">
             </div>
 
-            <div class="thumb-box" onclick="abrirModal(this)">
+            <div class="thumb-box" onclick="abrirModal(this)" data-video="https://www.youtube.com/embed/s7F6ZqFpF2M">
                 <img src="./fotos/foto-grid-4.png" alt="Descrição da foto">
             </div>
 
-            <div class="thumb-box" onclick="abrirModal(this)">
+            <div class="thumb-box" onclick="abrirModal(this)" data-video="https://www.youtube.com/embed/pr0gJ-Pq71E">
                 <img src="./fotos/foto-grid-5.png" alt="Descrição da foto">
             </div>
 
-            <div class="thumb-box" onclick="abrirModal(this)">
+            <div class="thumb-box" onclick="abrirModal(this)" data-video="https://www.youtube.com/embed/lfXLMiHmFcQ">
                 <img src="./fotos/foto-grid-6.png" alt="Descrição da foto">
             </div>
 
-            <div class="thumb-box" onclick="abrirModal(this)">
+            <div class="thumb-box" onclick="abrirModal(this)" data-video="https://www.youtube.com/embed/2Erd6OBcXqE">
                 <img src="./fotos/foto-grid-7.png" alt="Descrição da foto">
             </div>
 
-            <div class="thumb-box" onclick="abrirModal(this)">
+            <div class="thumb-box" onclick="abrirModal(this)" data-video="https://www.youtube.com/embed/G_7auskBrUQ">
                 <img src="./fotos/foto-grid-8.png" alt="Descrição da foto">
             </div>
 
@@ -412,41 +460,75 @@
 
     <div id="myModal" class="modal" onclick="fecharModal(event)">
         <span class="close-btn" onclick="fecharModal(event)">&times;</span>
-        <img class="modal-content" id="img01">
+        
+        <div id="modal-img-wrapper" class="modal-content-wrapper">
+            <img class="modal-content" id="img01">
+            
+            <div class="modal-hover-text" onclick="abrirVideo()">CLIQUE AQUI PARA VER O VÍDEO</div>
+        </div>
+
+        <iframe id="video-frame" class="modal-iframe" style="display: none;" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
 
     <script>
+        let videoAtual = ""; // Variável para guardar o link do vídeo clicado
+
         // Função para mostrar/esconder a pasta e virar a seta
         function toggleGaleria() {
             var grid = document.getElementById("gallery-grid");
             var seta = document.getElementById("seta-galeria");
 
-        if (grid.style.display === "grid") {
-            // Se está aberto, fecha e aponta para baixo
-            grid.style.display = "none";
-            seta.className = "fa-solid fa-chevron-down"; 
-        } else {
-            // Se está fechado, abre e aponta para cima
-            grid.style.display = "grid";
-            seta.className = "fa-solid fa-chevron-up";
-        }
+            if (grid.style.display === "grid") {
+                // Se está aberto, fecha e aponta para baixo
+                grid.style.display = "none";
+                seta.className = "fa-solid fa-chevron-down"; 
+            } else {
+                // Se está fechado, abre e aponta para cima
+                grid.style.display = "grid";
+                seta.className = "fa-solid fa-chevron-up";
+            }
         }
 
-        // Função para abrir o Modal
+        // Função para abrir o Modal com a foto
         function abrirModal(element) {
             var modal = document.getElementById("myModal");
             var modalImg = document.getElementById("img01");
-            var imgSource = element.querySelector('img').src; // Pega a imagem clicada
+            var imgSource = element.querySelector('img').src;
+            
+            // Pega o link do vídeo que você colocou no HTML
+            videoAtual = element.getAttribute("data-video");
+            
+            // Reseta a visualização: Mostra a foto e esconde o vídeo
+            document.getElementById("modal-img-wrapper").style.display = "flex";
+            document.getElementById("video-frame").style.display = "none";
+            document.getElementById("video-frame").src = ""; // Limpa vídeos anteriores
             
             modal.style.display = "flex";
             modalImg.src = imgSource;
         }
 
+        // NOVA Função: Troca a foto pelo vídeo dentro do Modal
+        function abrirVideo() {
+            if (videoAtual) {
+                // Esconde a foto
+                document.getElementById("modal-img-wrapper").style.display = "none";
+                
+                // Mostra o vídeo e injeta o link com autoplay
+                var iframe = document.getElementById("video-frame");
+                iframe.style.display = "block";
+                
+                // Adiciona ?autoplay=1 para o vídeo já começar rodando sozinho
+                iframe.src = videoAtual + "?autoplay=1";
+            }
+        }
+
         // Função para fechar o Modal (Clicando no X ou fora)
         function fecharModal(event) {
-            // Só fecha se clicar no X ou no fundo escuro (não na imagem)
-            if (event.target.id === "myModal" || event.target.className === "close-btn") {
+            // Agora fecha se clicar no fundo preto (myModal), no X (close-btn) ou no espaço vazio ao lado da foto (modal-img-wrapper)
+            if (event.target.id === "myModal" || event.target.className === "close-btn" || event.target.id === "modal-img-wrapper") {
                 document.getElementById("myModal").style.display = "none";
+                // Muito importante: tira o link do iframe para o áudio parar de tocar!
+                document.getElementById("video-frame").src = "";
             }
         }
     </script>
