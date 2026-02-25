@@ -315,6 +315,34 @@
             .modal-iframe { width: 60%; }
         }
 
+        /* Animação para a bolinha de REC piscar */
+        @keyframes pulse-red {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .rec-dot {
+            height: 12px;
+            width: 12px;
+            background-color: red;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-red 1.5s infinite;
+            margin-right: 5px;
+        }
+
+        /* Estilo para o vídeo do GitHub no Modal */
+        .video-github-player {
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+        }
+
+        @media (min-width: 768px) {
+            .video-github-player { width: 60%; }
+        }
     </style>
 </head>
 <body>
@@ -370,6 +398,10 @@
                 <span>Vídeo destaque</span>
             </a>
 
+        </div>
+
+        <div class="link-btn folder-btn" onclick="abrirLiveGithub()">
+            <span class="rec-dot"></span> Câmera ao vivo
         </div>
 
         <div class="link-btn folder-btn" onclick="toggleGaleria()">
@@ -523,6 +555,49 @@
                 document.getElementById("video-frame").src = "";
             }
         }
+
+        function abrirLiveGithub() {
+        var modal = document.getElementById("myModal");
+        var wrapper = document.getElementById("modal-img-wrapper");
+        var iframe = document.getElementById("video-frame");
+
+        // Esconde os elementos da galeria de fotos/youtube
+        wrapper.style.display = "none";
+        iframe.style.display = "none";
+        iframe.src = "";
+
+        // Link do seu vídeo no GitHub (URL DIRETA/RAW)
+        const videoUrl = "https://github.com/educaveira/educaveira/raw/refs/heads/main/v%C3%ADdeos/cam_recording.mp4";
+
+        // Cria o player de vídeo HTML5
+        const videoHTML = `
+            <video id="github-player" class="video-github-player" controls autoplay>
+                <source src="${videoUrl}" type="video/mp4">
+                Seu navegador não suporta este vídeo.
+            </video>
+        `;
+
+        // Remove player antigo se existir para não duplicar
+        const antigo = document.getElementById("github-player");
+        if(antigo) antigo.remove();
+
+        // Injeta o vídeo no modal e abre
+        modal.insertAdjacentHTML('beforeend', videoHTML);
+        modal.style.display = "flex";
+    }
+
+    // ATUALIZAÇÃO IMPORTANTE: Ajuste sua função fecharModal para parar o vídeo
+    function fecharModal(event) {
+        if (event.target.id === "myModal" || event.target.className === "close-btn" || event.target.id === "modal-img-wrapper") {
+            document.getElementById("myModal").style.display = "none";
+            document.getElementById("video-frame").src = "";
+            
+            // Se houver vídeo do GitHub tocando, ele para e é removido
+            const player = document.getElementById("github-player");
+            if(player) player.remove();
+        }
+    }
+
     </script>
 
 </body>
