@@ -343,6 +343,11 @@
         @media (min-width: 768px) {
             .video-github-player { width: 60%; }
         }
+        .btn-desativado {
+            opacity: 0.5;         /* Deixa o botão mais clarinho/apagado */
+            cursor: not-allowed;  /* Mostra o ícone de "proibido" ao passar o rato */
+            pointer-events: none; /* Desativa completamente qualquer clique */
+        }
     </style>
 </head>
 <body>
@@ -363,10 +368,10 @@
                 <span>Contato</span>
             </a>
 
-            <a href="midia-kit-2026.pdf" target="_blank" class="icon-btn">
+            <div class="icon-btn btn-desativado">
                 <i class="fa-regular fa-newspaper"></i>
                 <span>Mídia Kit</span>
-            </a>
+            </div>
 
             <a href="https://www.instagram.com/oeducaveira?igsh=M3N4Z2g0NjIxZ2Vr" target="_blank" class="icon-btn">
                 <i class="fa-brands fa-instagram"></i>
