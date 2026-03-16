@@ -154,7 +154,7 @@
 
         /* Tooltip (Texto ao passar o mouse) */
         .thumb-box::after {
-            content: "Clique para expandir 🔍";
+            content: var(--gallery-expand-text, "Clique para expandir 🔍");
             position: absolute;
             bottom: 0; left: 0; width: 100%;
             background: rgba(0,0,0,0.8);
@@ -359,18 +359,18 @@
         <img src="./fotos/profile-theme.jpg" alt="Perfil" class="profile-pic">
 
         <h1>EDU CAVEIRA</h1>
-        <p>Vulto, atividades paranormais e o Edu morando sozinho.</p>
+        <p data-i18n="bio">Vulto, atividades paranormais e o Edu morando sozinho.</p>
 
         <div class="social-grid">
             
             <a href="mailto:contato@educaveira.com" class="icon-btn">
                 <i class="fa-regular fa-envelope"></i>
-                <span>Contato</span>
+                <span data-i18n="contact">Contato</span>
             </a>
 
             <div class="icon-btn btn-desativado">
                 <i class="fa-regular fa-newspaper"></i>
-                <span>Mídia Kit</span>
+                <span data-i18n="midia-kit">Mídia Kit</span>
             </div>
 
             <a href="https://www.instagram.com/oeducaveira?igsh=M3N4Z2g0NjIxZ2Vr" target="_blank" class="icon-btn">
@@ -395,22 +395,22 @@
 
             <a href="https://whatsapp.com/channel/0029VaxlRwbJUM2jdes7Vu3H" target="_blank" class="icon-btn">
                 <i class="fa-brands fa-whatsapp"></i>
-                <span>Canal WhatsApp</span>
+                <span data-i18n="whatsapp-channel">Canal WhatsApp</span>
             </a>
 
             <a href="https://www.instagram.com/p/DM_M0Vqv-ux/" target="_blank" class="icon-btn">
                 <i class="fa-solid fa-star" style="color: #ffc222;"></i>
-                <span>Vídeo destaque</span>
+                <span data-i18n="featured-video">Vídeo destaque</span>
             </a>
 
         </div>
 
         <div class="link-btn folder-btn" onclick="abrirLiveGithub()">
-            <span class="rec-dot"></span> Ligar câmera do Edu
+            <span class="rec-dot"></span> <span data-i18n="btn-camera">Ligar câmera do Edu</span>
         </div>
 
         <div class="link-btn folder-btn" onclick="toggleGaleria()">
-            <i class="fa-solid fa-folder-open"></i> Momentos do Canal (Ver Fotos) <i class="fa-solid fa-chevron-down" id="seta-galeria"></i>
+            <i class="fa-solid fa-folder-open"></i> <span data-i18n="gallery-folder">Momentos do Canal (Ver Fotos)</span> <i class="fa-solid fa-chevron-down" id="seta-galeria"></i>
         </div>
 
         <div id="gallery-grid">
@@ -450,15 +450,15 @@
         </div>
 
         <div class="footer-about">
-    <h2 style="margin-top: 30px; margin-bottom: 15px; text-align: center;">Sobre</h2>
+    <h2 data-i18n="about-title" style="margin-top: 30px; margin-bottom: 15px; text-align: center;">Sobre</h2>
     
-    <p>
-        <strong>Edu Caveira</strong> é um criador de conteúdo especialista em vídeos de terror e influenciador digital brasileiro.
+    <p data-i18n="about-text-1">
+    <strong>Edu Caveira</strong> é um criador de conteúdo especialista em vídeos de terror e influenciador digital brasileiro.
     </p>
-    <p>
+    <p data-i18n="about-text-2">
         Iniciou sua trajetória na internet produzindo pegadinhas de terror no estilo tradicional, utilizando caracterização prática e cenários domésticos. Com o tempo, profissionalizou suas produções, migrando para narrativas ficcionais imersivas que mesclam horror e tecnologia.
     </p>
-    <p>
+    <p data-i18n="about-text-3">
         Atualmente, é reconhecido pelo uso avançado de efeitos visuais para criar atividades paranormais realistas, como anomalias em reflexos, entidades passando, objetos se movendo e simulações de possessão. Edu é o ator, diretor, escritor e produtor de seus próprios vídeos de horror, além de desenvolver estratégias para inserir grandes marcas no nicho de terror com segurança e alto engajamento.
     </p>
 
@@ -466,18 +466,18 @@
 
     <div style="text-align: center;">
         
-        <h4 style="margin-bottom: 5px; text-align: center">Contato Comercial</h4>
+        <h4 data-i18n="contact-comm" style="margin-bottom: 5px; text-align: center">Contato Comercial</h4>
         <p style="margin-top: 0; margin-bottom: 20px; text-align: center">
             contato@educaveira.com
         </p>
-  
-    <br>
-    
-    <p style="font-size: 0.75em; opacity: 0.6; font-style: italic; margin-top: 20px; text-align: center;">
-        Canal de entretenimento e terror ficcional. Não relacionado a temas religiosos.
-    </p>
 
-</div>
+        <br>
+        
+        <p data-i18n="footer-note" style="font-size: 0.75em; opacity: 0.6; font-style: italic; margin-top: 20px; text-align: center;">
+            Canal de entretenimento e terror ficcional. Não relacionado a temas religiosos.
+        </p>
+
+    </div>
 </div>
 
     <div id="myModal" class="modal" onclick="fecharModal(event)">
@@ -486,117 +486,120 @@
         <div id="modal-img-wrapper" class="modal-content-wrapper">
             <img class="modal-content" id="img01">
             
-            <div class="modal-hover-text" onclick="abrirVideo()">CLIQUE AQUI PARA VER O VÍDEO</div>
+            <div class="modal-hover-text" onclick="abrirVideo()" data-i18n="modal-click-video">CLIQUE AQUI PARA VER O VÍDEO</div>
         </div>
 
         <iframe id="video-frame" class="modal-iframe" style="display: none;" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
 
-    <script>
-        let videoAtual = ""; // Variável para guardar o link do vídeo clicado
+<script>
+    let videoAtual = ""; 
 
-        // Função para mostrar/esconder a pasta e virar a seta
-        function toggleGaleria() {
-            var grid = document.getElementById("gallery-grid");
-            var seta = document.getElementById("seta-galeria");
-
-            if (grid.style.display === "grid") {
-                // Se está aberto, fecha e aponta para baixo
-                grid.style.display = "none";
-                seta.className = "fa-solid fa-chevron-down"; 
-            } else {
-                // Se está fechado, abre e aponta para cima
-                grid.style.display = "grid";
-                seta.className = "fa-solid fa-chevron-up";
-            }
+    function toggleGaleria() {
+        var grid = document.getElementById("gallery-grid");
+        var seta = document.getElementById("seta-galeria");
+        if (grid.style.display === "grid") {
+            grid.style.display = "none";
+            seta.className = "fa-solid fa-chevron-down"; 
+        } else {
+            grid.style.display = "grid";
+            seta.className = "fa-solid fa-chevron-up";
         }
-
-        // Função para abrir o Modal com a foto
-        function abrirModal(element) {
-            var modal = document.getElementById("myModal");
-            var modalImg = document.getElementById("img01");
-            var imgSource = element.querySelector('img').src;
-            
-            // Pega o link do vídeo que você colocou no HTML
-            videoAtual = element.getAttribute("data-video");
-            
-            // Reseta a visualização: Mostra a foto e esconde o vídeo
-            document.getElementById("modal-img-wrapper").style.display = "flex";
-            document.getElementById("video-frame").style.display = "none";
-            document.getElementById("video-frame").src = ""; // Limpa vídeos anteriores
-            
-            modal.style.display = "flex";
-            modalImg.src = imgSource;
-        }
-
-        // NOVA Função: Troca a foto pelo vídeo dentro do Modal
-        function abrirVideo() {
-            if (videoAtual) {
-                // Esconde a foto
-                document.getElementById("modal-img-wrapper").style.display = "none";
-                
-                // Mostra o vídeo e injeta o link com autoplay
-                var iframe = document.getElementById("video-frame");
-                iframe.style.display = "block";
-                
-                // Adiciona ?autoplay=1 para o vídeo já começar rodando sozinho
-                iframe.src = videoAtual + "?autoplay=1";
-            }
-        }
-
-        // Função para fechar o Modal (Clicando no X ou fora)
-        function fecharModal(event) {
-            // Agora fecha se clicar no fundo preto (myModal), no X (close-btn) ou no espaço vazio ao lado da foto (modal-img-wrapper)
-            if (event.target.id === "myModal" || event.target.className === "close-btn" || event.target.id === "modal-img-wrapper") {
-                document.getElementById("myModal").style.display = "none";
-                // Muito importante: tira o link do iframe para o áudio parar de tocar!
-                document.getElementById("video-frame").src = "";
-            }
-        }
-
-        function abrirLiveGithub() {
-        var modal = document.getElementById("myModal");
-        var wrapper = document.getElementById("modal-img-wrapper");
-        var iframe = document.getElementById("video-frame");
-
-        // Esconde os elementos da galeria de fotos/youtube
-        wrapper.style.display = "none";
-        iframe.style.display = "none";
-        iframe.src = "";
-
-        // Link do seu vídeo no GitHub (URL DIRETA/RAW)
-        const videoUrl = "https://github.com/educaveira/educaveira/raw/refs/heads/main/v%C3%ADdeos/cam_recording.mp4";
-
-        // Cria o player de vídeo HTML5
-        const videoHTML = `
-            <video id="github-player" class="video-github-player" controls autoplay>
-                <source src="${videoUrl}" type="video/mp4">
-                Seu navegador não suporta este vídeo.
-            </video>
-        `;
-
-        // Remove player antigo se existir para não duplicar
-        const antigo = document.getElementById("github-player");
-        if(antigo) antigo.remove();
-
-        // Injeta o vídeo no modal e abre
-        modal.insertAdjacentHTML('beforeend', videoHTML);
-        modal.style.display = "flex";
     }
 
-    // ATUALIZAÇÃO IMPORTANTE: Ajuste sua função fecharModal para parar o vídeo
+    function abrirModal(element) {
+        var modal = document.getElementById("myModal");
+        var modalImg = document.getElementById("img01");
+        videoAtual = element.getAttribute("data-video");
+        document.getElementById("modal-img-wrapper").style.display = "flex";
+        document.getElementById("video-frame").style.display = "none";
+        document.getElementById("video-frame").src = ""; 
+        modal.style.display = "flex";
+        modalImg.src = element.querySelector('img').src;
+    }
+
+    function abrirVideo() {
+        if (videoAtual) {
+            document.getElementById("modal-img-wrapper").style.display = "none";
+            var iframe = document.getElementById("video-frame");
+            iframe.style.display = "block";
+            iframe.src = videoAtual + "?autoplay=1";
+        }
+    }
+
     function fecharModal(event) {
         if (event.target.id === "myModal" || event.target.className === "close-btn" || event.target.id === "modal-img-wrapper") {
             document.getElementById("myModal").style.display = "none";
             document.getElementById("video-frame").src = "";
-            
-            // Se houver vídeo do GitHub tocando, ele para e é removido
             const player = document.getElementById("github-player");
             if(player) player.remove();
         }
     }
 
-    </script>
+    function abrirLiveGithub() {
+        var modal = document.getElementById("myModal");
+        document.getElementById("modal-img-wrapper").style.display = "none";
+        document.getElementById("video-frame").style.display = "none";
+        const videoUrl = "https://github.com/educaveira/educaveira/raw/refs/heads/main/v%C3%ADdeos/cam_recording.mp4";
+        const videoHTML = `<video id="github-player" class="video-github-player" controls autoplay><source src="${videoUrl}" type="video/mp4">Seu navegador não suporta este vídeo.</video>`;
+        const antigo = document.getElementById("github-player");
+        if(antigo) antigo.remove();
+        modal.insertAdjacentHTML('beforeend', videoHTML);
+        modal.style.display = "flex";
+    }
+
+    // --- SISTEMA DE TRADUÇÃO ---
+    const translations = {
+            'pt': {
+                'bio': 'Vulto, atividades paranormais e o Edu morando sozinho.',
+                'contact': 'Contato',
+                'midia-kit': 'Mídia Kit',
+                'featured-video': 'Vídeo destaque',
+                'btn-camera': 'Ligar câmera do Edu',
+                'gallery-folder': 'Momentos do Canal (Ver Fotos)',
+                'about-title': 'Sobre',
+                'about-text-1': 'Edu Caveira é um criador de conteúdo especialista em vídeos de terror e influenciador digital brasileiro.',
+                'about-text-2': 'Iniciou sua trajetória na internet produzindo pegadinhas de terror no estilo tradicional, utilizando caracterização prática e cenários domésticos.',
+                'about-text-3': 'Atualmente, é reconhecido pelo uso avançado de efeitos visuais para criar atividades paranormais realistas...',
+                'contact-comm': 'Contato Comercial',
+                'footer-note': 'Canal de entretenimento e terror ficcional. Não relacionado a temas religiosos.',
+                'gallery-expand': '"Clique para expandir 🔍"',
+                'modal-click-video': 'CLIQUE AQUI PARA VER O VÍDEO',
+                'whatsapp-channel': 'Canal WhatsApp'
+            },
+            'en': {
+                'bio': 'Shadows, paranormal activities and Edu living alone.',
+                'contact': 'Contact',
+                'midia-kit': 'Media Kit',
+                'featured-video': 'Featured Video',
+                'btn-camera': "Turn on Edu's camera",
+                'gallery-folder': 'Channel Moments (View Photos)',
+                'about-title': 'About',
+                'about-text-1': 'Edu Caveira is a content creator specializing in horror videos and a Brazilian digital influencer.',
+                'about-text-2': 'He started his journey producing horror pranks in the traditional style, using practical effects and home settings.',
+                'about-text-3': 'Currently, he is recognized for his advanced use of visual effects to create realistic paranormal activities...',
+                'contact-comm': 'Business Contact',
+                'footer-note': 'Entertainment and fictional horror channel. Not related to religious themes.',
+                'gallery-expand': '"Click to expand 🔍"',
+                'modal-click-video': 'CLICK HERE TO WATCH THE VIDEO',
+                'whatsapp-channel': 'WhatsApp Channel'
+            }
+        };
+
+    function applyTranslations() {
+        const userLang = navigator.language.substring(0, 2);
+        const lang = translations[userLang] ? userLang : 'pt';
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang][key]) {
+                el.innerText = translations[lang][key];
+            }
+        });
+        document.documentElement.style.setProperty('--gallery-expand-text', translations[lang]['gallery-expand']);
+    }
+
+    window.onload = applyTranslations;
+</script>
 
 </body>
 </html>
